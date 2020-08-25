@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/TechnicalTest/app/Http/Controllers/API/PassportController.php</file>
-            <file>file:/C:/xampp/htdocs/TechnicalTest/routes/api.php</file>
-            <file>file:/C:/xampp/htdocs/TechnicalTest/app/Http/Controllers/adminController/postController.php</file>
-            <file>file:/C:/xampp/htdocs/TechnicalTest/app/Http/Controllers/API/TasksController.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/app/Http/Controllers/application/ADMIN/AdminController.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/resources/views/Admin-view/Sections/section.blade.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/app/Http/Controllers/application/ADMIN/SectionController.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/resources/lang/en/messages.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/resources/views/master-layout/admin_master.blade.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/routes/web.php</file>
         </group>
     </open-files>
 </project-private>
