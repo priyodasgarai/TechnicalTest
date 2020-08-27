@@ -17,6 +17,7 @@
         <!-- AdminLTE Skins. Choose a skin from the css/skins
              folder instead of downloading all of them to reduce the load. -->
         <link rel="stylesheet" href="{{asset('public/admin-asset/css/_all-skins.min.css')}}">
+        <link rel="stylesheet" href="{{asset('public/admin-asset/css/sweetalert.css')}}">
          @yield('custom_css')
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -104,7 +105,7 @@
                         @endif  
                         <li class="treeview nav-link {{$active}} ">
                             <a href="#">
-                                <i class="fa fa-scribd"></i> <span>Setting</span>
+                                <i class="fa fa-th"></i> <span>Setting</span>
                                 <span class="pull-right-container">
                                     <i class="fa fa-angle-left pull-right"></i>
                                 </span>
@@ -124,15 +125,33 @@
                                 <li class="nav-link {{$active}}"><a href="{{url('admin/update-admin-details')}}"><i class="fa fa-circle-o"></i>  Update Details</a></li>
                             </ul>
                         </li>
-@if(Session::get('page')== "sections")
-                        <?php $active = "active"; ?>
+                        
+                         @if(Session::get('page')== "sections" || Session::get('page')== "categories")
+                        <?php  $active = "active"; ?>
                         @else
                         <?php $active = ""; ?>
-                        @endif                        
-                        <li class="nav-link {{$active}}">
-                            <a href="{{url('admin/sections')}}">
-                                <i class="fa fa-dashboard"></i> <span>Sections</span>                                
-                            </a>                           
+                        @endif  
+                         <li class="treeview nav-link {{$active}} ">
+                            <a href="#">
+                                <i class="fa fa-th"></i> <span>catalogues</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                @if(Session::get('page')== "sections")
+                                <?php $active = "active"; ?>
+                                @else
+                                <?php $active = ""; ?>
+                                @endif  
+                                <li class="nav-link {{$active}}"><a href="{{url('admin/sections')}}"><i class="fa fa-circle-o"></i>Sections</a></li>
+                                @if(Session::get('page')== "categories")
+                                <?php $active = "active"; ?>
+                                @else
+                                <?php $active = ""; ?>
+                                @endif  
+                                <li class="nav-link {{$active}}"><a href="{{url('admin/categories')}}"><i class="fa fa-circle-o"></i>Categories</a></li>
+                            </ul>
                         </li>
                     </ul>               
                 </section>
@@ -186,11 +205,14 @@
         <script src="{{asset('public/admin-asset/js/adminlte.min.js')}}"></script>
         <!-- AdminLTE for demo purposes -->
         <script src="{{asset('public/admin-asset/js/demo.js')}}"></script>
+        <script src="{{asset('public/admin-asset/js/sweetalert.min.js')}}"></script>
          @yield('custom_js')     
         <script>
             $(document).ready(function () {
                 $('.sidebar-menu').tree();
-                    })
+                    
+    
+            })
         </script>
         
     </body>

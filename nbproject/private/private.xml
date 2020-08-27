@@ -3,12 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/TechnicalTest/app/Http/Controllers/application/ADMIN/AdminController.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/resources/views/Admin-view/categories/append_categories_level.blade.php</file>
             <file>file:/C:/xampp/htdocs/TechnicalTest/resources/views/Admin-view/Sections/section.blade.php</file>
-            <file>file:/C:/xampp/htdocs/TechnicalTest/app/Http/Controllers/application/ADMIN/SectionController.php</file>
-            <file>file:/C:/xampp/htdocs/TechnicalTest/resources/lang/en/messages.php</file>
-            <file>file:/C:/xampp/htdocs/TechnicalTest/resources/views/master-layout/admin_master.blade.php</file>
-            <file>file:/C:/xampp/htdocs/TechnicalTest/routes/web.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/resources/views/Admin-view/categories/add_edit_category.blade.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/resources/views/Admin-view/categories/categories.blade.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/app/Http/Controllers/application/ADMIN/CategoryController.php</file>
+            <file>file:/C:/xampp/htdocs/TechnicalTest/app/Model/Category.php</file>
         </group>
     </open-files>
 </project-private>

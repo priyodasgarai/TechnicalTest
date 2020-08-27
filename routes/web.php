@@ -11,30 +11,16 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
+*/
 
-Route::prefix('admin')->group(function(){
-	Route::match(['get','post'],'/','application\ADMIN\AdminController@login');
-	Route::get('/dashboard','application\ADMIN\AdminController@dashboard');
-	
-});
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function () {
-    return view('Admin-view.login');
-});
-Route::get('/dashboard', function () {
-    return view('Admin-view.dashboard');
-});
-
-
-
-->namespace('application\ADMIN')
-*/
 Route::get('/blank', function () {
     return view('Admin-view.blank');
 });
+
 Route::prefix('admin')->namespace('application\ADMIN')->group(function(){
 	Route::match(['get','post'],'/','AdminController@login');
         Route::group(['middleware'=>['admin']],function(){
@@ -51,8 +37,23 @@ Route::prefix('admin')->namespace('application\ADMIN')->group(function(){
     Route::get('admin-stores-edit-{id}', 'application\admin\CategoryController@admin_store_edit');
     Route::post('admin-stores-edit-post','application\admin\CategoryController@admin_store_edit_post');
     Route::get('admin-stores-delete-{id}', 'application\admin\CategoryController@admin_store_delete');
-     /**************************************************************************************/
+     /****************************************Sections**********************************************/     
             Route::get('/sections','SectionController@sections');
+            Route::post('update-section-status','SectionController@updateSectionStatus');
+            Route::match(['get','post'],'add-section','SectionController@addSection');
+            Route::get('/edit-section-{id}','SectionController@editSection');
+            Route::post('/edit-section','SectionController@updateSection');
+            Route::get('section-delete-{id}', 'SectionController@deleteSection');
+    /****************************************Categories**********************************************/     
+            Route::get('/categories','CategoryController@categories');
+            Route::post('update-category-status','CategoryController@updateCategoryStatus');
+            Route::match(['get','post'],'add-edit-category/{id?}','CategoryController@addEditCategory');
+            Route::post('append-categories-level','CategoryController@appendCategoriesLevel');
+//            Route::post('update-section-status','SectionController@updateSectionStatus');
+//            Route::match(['get','post'],'add-section','SectionController@addSection');
+//            Route::get('/edit-section-{id}','SectionController@editSection');
+//            Route::post('/edit-section','SectionController@updateSection');
+//            Route::get('section-delete-{id}', 'SectionController@deleteSection');
             
         });
 	

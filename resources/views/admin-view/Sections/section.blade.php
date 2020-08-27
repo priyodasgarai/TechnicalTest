@@ -16,80 +16,71 @@
 </ol>-->
 @endsection
 
-@section('custom_js')
-
-@endsection
 @section('Main-content')
-
 <div class="box">
     <div class="box-header">
-        <div class="col-md-12">
-            <div class="input-group input-group-sm pull-left" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control" placeholder="Search">
-                <div class="input-group-btn">
-                    <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-            <div class="pull-right"> 
-                <ul class="pagination pagination-sm no-margin">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                </ul>
-            </div>
-        </div>
+        <h3 class="box-title">Data Table With Full Features</h3>
+        <a  href="{{url('/admin/add-section')}}" class="btn btn-mini btn-primary pull-right button_class">{{trans('labels.31')}}</a>
     </div>
-    <!-- /.box-header -->
-     <?php $sl = 1; ?>
-     @if(!empty($sections))
-    <div class="box-body table-responsive no-padding">
-        <table class="table table-hover">
-            <tr>
-                <th>SL No</th>
-                <th>ID</th>
-                <th>Name</th>                
-                <th>Status</th>
-                <th>Action</th>
-            </tr>
-            
-             @foreach($sections as $data)
-            <tr>
-                <td>{{$sl}}</td>
-                <td>{{ucwords($data->id)}}</td>
-                <td>{{ucwords($data->name)}}</td>
-                <td>{{ucwords($data->status)}}</td>               
-                <td>{{ucwords($data->created_at)}}.</td>
-            </tr>
-           <?php $sl++; ?>
-            @endforeach
+    <!-- /.box-header -->           
+    @if(!empty($sections))
+    <div class="box-body">
+        <table id="section" class="table table-bordered table-striped">
+            <thead>
+                <tr>                  
+                    <th>ID</th>
+                    <th>Name</th>                
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>              
+                @foreach($sections as $data)
+                <tr>               
+                    <td>{{ucwords($data->id)}}</td>
+                    <td>{{ucwords($data->name)}}</td>
+                    <td>
+                       @if ($data->status==1) 
+                       {{trans('labels.26')}} 
+                            @else 
+                            {{trans('labels.27')}}    
+                            @endif 
+                    </td>               
+                    <td>
+                        <input type="hidden" id="section_details_{{$data->id}}" value="{{json_encode($data)}}">
+                         @if ($data->status==1)  
+                            <a class="btn btn-mini primary" onclick="change_sections_status('{{base64_encode(env('APP_KEY').'||'.$data->id)}}')" >
+                                <i class="fa fa-circle"></i> {{trans('labels.27')}}     
+                            </a>
+                            @else 
+                            <a class="btn btn-mini primary" onclick="change_sections_status('{{base64_encode(env('APP_KEY').'||'.$data->id)}}')" >
+                                <i class="fa fa-circle"></i> {{trans('labels.26')}}     
+                            </a>
+                            @endif  
+                             &nbsp;&nbsp;
+                            <a href="{{ url('/admin/edit-section-'.base64_encode($data->id.'||'.env('APP_KEY')))}}"   class="btn btn-mini mergin_one" >
+                                <i class="fa fa-edit"></i> {{trans('labels.28')}}
+                            </a>
+                            &nbsp;&nbsp;
+                            <a onclick="return confirm('{{trans('labels.32')}}');" href="{{ url('/admin/section-delete-'.base64_encode($data->id.'||'.env('APP_KEY')))}}"  class="btn btn-mini" style="margin:1px">
+                                <i class="fa fa-trash"></i> {{trans('labels.29')}}
+                            </a>
+                            &nbsp;&nbsp; 
+                    </td>
+                </tr>          
+                @endforeach                
+            </tbody>               
         </table>
     </div>
-     @else
-        <div class="box-body table-responsive no-padding">
-            <h3>  {{trans('messages.15')}} </h3>
-        </div>
-        @endif
     <!-- /.box-body -->
+    @else
+    <div class="box-body table-responsive no-padding">
+        <h3>  {{trans('messages.15')}} </h3>
+    </div>
+    @endif
 </div>
 <!-- /.box -->
-
 @endsection
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -128,4 +119,57 @@
     </ul>
 </div>
 @endif
+@endsection
+
+@section('custom_css')
+<link rel="stylesheet" href="{{asset('public/admin-asset/css/dataTables.bootstrap.min.css')}}">
+@endsection
+@section('custom_js')
+<script src="{{asset('public/admin-asset/js/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('public/admin-asset/js/dataTables.bootstrap.min.js')}}"></script>
+<script>
+$(function () {
+    $('#section').DataTable({
+        'paging': true,
+        'lengthChange': true,
+        'searching': true,
+        'ordering': true,
+        'info': true,
+        'autoWidth': true
+    })
+})
+
+ function change_sections_status(id){
+    var dec = window.atob(id);
+    var res = dec.split('||');
+    var data_id = res[1];
+    var data_details = $("#section_details_" + data_id).val();
+    var output = $.parseJSON(data_details);
+    if (output.status == 1){
+    var status = 0;
+    } else{
+    var status = 1;
+    }    
+    $.post('update-section-status',
+    {
+    "_token": "{{ csrf_token() }}",
+    section_id: data_id,
+    status: status   
+    }, function (data, status, xhr) { 
+    console.log(data);
+    if (data.result == true) {
+     swal("{{trans('messages.1')}}",data.message, "success");
+    window.location.href = 'sections';
+    } else{
+         swal("{{trans('messages.4')}}", data.message, "error");
+    window.location.href = 'sections';
+    }
+    });
+  /*  .done(function() { 
+        alert('Request done!'); 
+    }).fail(function(jqxhr, settings, ex) { 
+        alert('failed, ' + ex); 
+    }); */
+    }
+</script>
 @endsection

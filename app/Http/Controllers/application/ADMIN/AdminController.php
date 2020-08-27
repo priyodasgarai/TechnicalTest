@@ -45,8 +45,7 @@ class AdminController extends Controller {
             if (Auth::guard('web_admin')->attempt($credentials)) {
                 return redirect('admin/dashboard');
             } else {
-                return redirect()->back()->with('flash_message', trans('messages.10'));
-                ;
+                return redirect()->back()->with('flash_message', trans('messages.10'));             
             }
         }
         return view('Admin-view.login');
